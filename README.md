@@ -6,7 +6,7 @@
 
 ## Usage
 
-#### About Lambda > Cloudwatch > ElasticSearch
+#### About the log streaming
 
 This module creates a lambda that streams logs from Cloudwatch
 to an ElasticSearch.
@@ -24,20 +24,3 @@ https://docs.aws.amazon.com/cli/latest/reference/logs/put-subscription-filter.ht
 
 On AWS Console:
 ![alt text](example.png "Example visual")
-
-#### About the log format
-
-This module expects that you always log JSON documents, like:
-
-```
-{
-    "environment": "test",
-    "level": "info",
-    "message": "Http request",
-    "data": {
-      "method": "GET",
-      "path": "/health",
-      "response": 200
-    }
-}
-```
