@@ -41,7 +41,7 @@ function decompress (input) {
 async function sendLogsToES (payload) {
   const requestBody = parseToBulkRequestBody(payload);
   console.log('Sending logs to ES', requestBody);
-	const { statusCode, body } = await request('POST', `/_bulk`, requestBody);
+  const { statusCode, body } = await request('POST', `/_bulk`, requestBody);
   if (statusCode >= 200 && statusCode < 300) {
     console.log('Logs sent to ES', body);
   } else {
@@ -112,26 +112,26 @@ function addRawIndicesToObject (obj) {
 }
 
 function request (method, path, body = '') {
-	const signedParams = aws4.sign({
-		host: ES_ENDPOINT,
-		path,
-		method,
+  const signedParams = aws4.sign({
+    host: ES_ENDPOINT,
+    path,
+    method,
     headers: {
       'Content-Type': 'application/json'
     },
-		body
-	});
+    body
+  });
 
-	return new Promise((resolve, reject) => {
-		const req = https.request(signedParams, (res) => {
-			let responseBody = '';
-			res.on('data', chunk => { responseBody += chunk; });
-			res.on('end', () => {
-				res.body = responseBody;
-				resolve(res);
-			});
-			res.on('error', error => reject(error));
-		});
-		req.end(signedParams.body);
-	});
+  return new Promise((resolve, reject) => {
+    const req = https.request(signedParams, (res) => {
+      let responseBody = '';
+      res.on('data', chunk => { responseBody += chunk; });
+      res.on('end', () => {
+        res.body = responseBody;
+        resolve(res);
+      });
+      res.on('error', error => reject(error));
+    });
+    req.end(signedParams.body);
+  });
 }
