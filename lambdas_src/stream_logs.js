@@ -85,8 +85,7 @@ function extractJSONFromLogMessage (message) {
     .map(m => m.trim())
     .filter(m => m.startsWith('{') && m.endsWith('}'))
     .filter(m => isValidJSON(m))
-    .map(m => JSON.parse(m))
-    .map(o => addRawIndicesToObject(o));
+    .map(m => JSON.parse(m));
 }
 
 function isValidJSON (str) {
@@ -98,27 +97,12 @@ function isValidJSON (str) {
   }
 }
 
-function addRawIndicesToObject (obj) {
-  Object.keys(obj).forEach(key => {
-    if (String(obj[key]) !== '[object Object]') {
-      return;
-    }
-
-    obj[`_${key}`] = JSON.stringify(obj[key]);
-    addRawIndicesToObject(obj[key]);
-  });
-
-  return obj;
-}
-
 function request (method, path, body = '') {
   const signedParams = aws4.sign({
     host: ES_ENDPOINT,
     path,
     method,
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body
   });
 
