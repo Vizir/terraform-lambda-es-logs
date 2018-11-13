@@ -6,7 +6,9 @@ data "template_file" "elasticsearch_access_policies" {
 
   vars {
     account_id       = "${data.aws_caller_identity.current.account_id}"
+    domain_name      = "${var.name}"
     identity_role_id = "${aws_iam_role.es_cognito_identity_role.arn}"
+    region           = "${data.aws_region.current.id}"
   }
 }
 

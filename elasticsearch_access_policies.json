@@ -12,7 +12,7 @@
       "Action": [
         "es:*"
       ],
-      "Resource": "arn:aws:es:us-east-1:459322381507:domain/quantick-logs/*"
+      "Resource": "arn:aws:es:${region}:${account_id}:domain/${domain_name}/*"
     }
   ]
 }
